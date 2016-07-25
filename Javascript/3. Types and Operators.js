@@ -108,6 +108,15 @@ console.log(a3);
 		- Converting a value from one type to another
 		- This happens quite often in Javascript because it's dynamically typed.
 
+	To see what a value will coerce to for a number value, we can use Number()
+
+	Number("3"); // 3
+	Number(false); // 0
+	Number(true); // 1
+	
+	Number(null); // 0
+	Number(undefined); // NaN (this means, not a number), NaN can sometimes be treated as a primitive type
+
 */
 
 var a = 'hello ' + 'world';
@@ -118,10 +127,116 @@ console.log(b); // 12 (1 is coerced to a string)
 
 /*
 	Comparison operators
-		- 
+		- There are special cases when coercion doesn't do as we would expect without looking at a table.
+
+	false == 0 // true
+
+	null == 0 // false
+
+	null < 1 // true
+
+	"" == 0 // true
+
+	"" == false // true
+
+	String Equality and String Inequality compares 2 values but DOES NOT try to coerce the values.
+
+	3 === 3 // true
+
+	"3" === "3" // true
+
+	3 === "3" // false
+
+	99% of the time, you should use String Equality and String Inequality checks. Don't use == unless you explicitly want to
+	coerce the values that you're comparing
+
+	Equality Comparisons Table:::
+	https://developer.mozilla.org/en-US/docs/Web/JavaScript/Equality_comparisons_and_sameness
 
 */
 
 console.log(1 < 2 < 3); // true
 
 console.log(3 < 2 < 1); // result?? hint: The operator precedence of < is left-to-right
+
+/*
+	Existence and Booleans
+
+	It's not recommended to use Boolean(), Number(), etc.. in production code.
+
+	Boolean(undefined); // false
+	Boolean(null); // false
+	Boolean(""); // false
+	
+	Coersion is usefule when we want to check if a variable has a value (something other than undefined, null, ""). The exception is
+	when the value is 0
+	
+	To handle this we can have:
+*/
+
+
+	if (a || a === 0) {
+		//..
+	}
+
+	// if there's no chance that the object is 0 then we can have 
+
+	if (a) {
+		//..
+	}
+
+/*
+	Default Values
+	
+	When we don't pass parameters to functions, we can set default values to prevent unexpected results
+
+*/
+
+function greet(name) {
+	name = name || '<Your name here>';
+	console.log('Hello ' + name);
+}
+
+greet();
+
+/*
+	Recall that when we call greet, a new exection context is pushed on the Execution Stack and set the variable name in memory
+	as if it were declared within the function. To prevent receiving undefined, a lot of legacy code uses the || operator to set
+	a default value if the parameter isn't set.
+
+	The || Operator doesn't just return true of false, it returns that value that can be coerced to true.
+
+	true || false // true
+
+	undefined || "hello" // hello
+
+	"hi" || "hello" // hi (it will return the first value that coerces to true)
+*/
+
+/*
+	Framework Aside:
+		- For our purposes, we'll assume a framework and a library are the same thing. They're just a grouping of javascript tasks
+			intended to be reusable.
+
+	Imagine we are using 2 libraries and have our main application script:
+*/
+
+// lib1.js
+
+var libraryName = "Lib 1";
+
+// lib2.js
+
+var libraryName = "Lib 2";
+
+// main.js
+
+console.log(libraryName); // Lib 2 :O
+
+/*
+	Oops, our libraries have collided! What can we do?
+
+	Well, we can check to see if the libraryName is already in the global execution context:
+
+	window.libraryName = window.libraryName || "Lib 2";
+*/
