@@ -304,3 +304,129 @@ reference to the global scope if this was the intended behavior. So, you should 
 console.log( a ); // undefined
 console.log( b ); // 5
 console.log( c ); // undefined 
+
+/*
+	12. ZONES--------------------------------------------
+
+		- Zones are execution contexts. 
+
+	Imagine we have code that looks like this:
+*/
+
+a();
+setTimeout(b, 0);
+setTimeout(c, 0);
+d();
+
+/*
+	We know that a is executed and completed first,
+	b is placed on the event queue to be processed later,
+	c is placed on the event queue to be processed later,
+	and d is executed and completed second..
+
+	finally, after a and d have finished and everything is off the execution stack,
+	b is processed then c is proccessed. So the order of the code is like this:
+
+	a, d, b, c
+
+	What is Zone.js then?! Well, what if we wanted to time how long each of these functions took to execute?
+	Or even how long did this entire process take to execute??
+
+	Well if we had::
+*/
+
+start();
+a();
+setTimeout(b, 0);
+setTimeout(c, 0);
+d();
+stop();
+
+/*
+	This wouldn't work because the order would then be:
+
+	start, a, d, stop, b, c
+
+	Notice that we didn't time how long b and c took.. Well if we can find a way to measure this time, that would be great..
+	Well, Zone.js allows us to do exactly that!!
+	
+
+	// Special hooks / properties
+
+	var start, time;
+	function onZoneEnter() {
+		start = Date.now();
+	}
+	function onZoneLeave() {
+		time += (Date.now() - start);
+	}
+*/
+
+zone.run(function() {
+	a();
+	setTimeout(b, 0);
+	setTimeout(c, 0);
+	d();
+})
+
+
+
+//:::::::::::::::::::
+
+onZoneEnter();
+a();
+d();
+onZoneLeave();
+
+onZoneEnter();
+b();
+onZoneLeave();
+
+onZoneEnter();
+c();
+onZoneLeave();
+
+/*
+	So what's happening? How does Zone.js do this?
+
+		- Async tasks run in the same zone as where they were registered
+
+		registered = setTimeout, addEventListener, onclick, etc..
+			- registered simply means anything that could cause a task to be added to the event queue.. i.e. asynchronous task
+
+		So because we setTimeout on b and c, they also inherit these special properties or these special hooks that are mentioned above
+
+		Another important aspect of Zone.js is that it's transitive.
+
+		When the first function queues up the second function then that queues up the third property, these functions are still in the zone.. they still have
+		the properties of start, time, etc..
+
+*/
+
+function first() {
+	setTimeout(second, 0);
+}
+
+function second() {
+	setTimeout(third, 0);
+}
+
+function third() {
+	/* ... */
+}
+zone.run(first);
+
+/*
+	Zone.js is a meta-monkey patch..
+
+		- It makes it easy to :
+			- patch and clean up code at the right time.. even with async tasks
+			- compose behaviors
+
+	So how can I use Zones????
+
+		- Debugging
+		- Testing/mocking
+		- Profiling
+		- ???
+*/

@@ -554,7 +554,7 @@ greetSpanish('John', 'Doe');
 	expects, then it will throw an error.
 	
 	The Syntax parser reads your code making sure it adheres to certain rules. It can even make changes to your code before
-	it is exectured (for example adding a semicolon at the end of a statement).
+	it is executed (for example adding a semicolon at the end of a statement).
 
 
 	Dangerous Aside: Automatic Semicolon Insertion
@@ -565,7 +565,7 @@ greetSpanish('John', 'Doe');
 	For example, after the 'return' keyword.
 
 	So actually, semicolons are semi-optional.. In general, you should always place your own semicolons to avoid the syntax parser
-	having to do this for you and to avoid potetional debug errors.
+	having to do this for you and to avoid potential debug errors.
 
 	Here is an example of when depending on the Syntax Parser's automatic character insertion can result in bugs:
 */
@@ -639,9 +639,9 @@ var greeting = function(name) {
 console.log(greeting); // Hello Pius
 
 /*
-	To have a function expression without assigning the function to a variable we can wrap it in parantheses.
+	To have a function expression without assigning the function to a variable we can wrap it in parentheses.
 
-	Remember that parantheses only wrap around expressions.. not statements
+	Remember that parentheses only wrap around expressions.. not statements
 	
 	// This is invalid
 
@@ -656,9 +656,400 @@ console.log(greeting); // Hello Pius
 	console.log(greeting + ' ' + name)
 }("Pius"));
 
-// You can also invoke the function from outside the parantheses.. there isn't a best practice or "right way"
+// You can also invoke the function from outside the parentheses.. there isn't a best practice or "right way"
 
 (function(name){
 	var greeting = 'Another IIFE: Hey ';
 	console.log(greeting + ' ' + name);
 })();
+
+/*
+	Immediately Invoked Function Expressions (IIFEs) and SAFE CODE
+	
+	Okay.. so as we've mentioned previously, when a javascript program is run, the global execution context
+	is created.. if there are no variables or functions defined and only our IIFE, during execution time, when the
+	engine is parsing this code, it will create the execution context of the IIFE on the fly.. Whatever variables
+	are defined within the function expression are part of the variable environment of the function.. BY THE WAY..
+	it's treated as an anonymous function so we couldn't access it from the global 'this' object.
+
+	Notice that the variables within the IIFE do not collide with the variables outside of the IIFE.. 
+*/
+
+//------ greet.js ------------------
+var greeting = 'Hola';
+
+//-------- main.js --------------------
+
+(function(name){
+	var greeting = 'Hello';
+	console.log(greeting + ' ' + name);
+}('Pius'));
+
+// What is the output?!?!?
+
+console.log(greeting); // what is the output??
+
+
+/*
+	What if you want to effect the global object?! Well, you can pass it as a parameter::
+*/
+
+(function(global, name){
+	var greeting = 'Hello';
+	global.greeting = 'Hello';
+	console.log(greeting + ' ' + name);
+}(window, 'Pius'));
+
+/*
+	Understanding Closures
+		- Closures are absolutely vital to understand in order to write javascript.
+	
+	The following code looks straight forward right?! well let's write it again....
+*/
+
+function greet(whattosay) {
+
+	return function(name) {
+		console.log(whattosay + ' ' + name);
+	}
+
+}
+
+greet('Hi')('Pius'); // Hi Pius
+
+/*
+	Let's write this again as follows to make it clear what the confusion might be...
+*/
+
+var sayHi = greet('Hi');
+sayHi('Pius'); // Hi Pius
+
+/*
+	So how does the sayHi function still know the whattosay variable??!?! How does it know that we set the
+	whattosay variable to Hi when we called the greet() function.. didn't we just return the function...?
+
+	After we call greet, it returns the function.. that means it's popped off the execution stack.. its execution context
+	is over.. how does our sayHi function still have access to the whattosay variable
+	that was part of the execution context of greet.. which is now gone (e.g. popped off the stack)?!
+
+	How does the returned function still have the proper value of the whattosay variable??
+
+	Well, this is possible because of CLOSURES..
+
+	Well, as we've mentioned, when the global execution environment reaches the var sayHi = greet('Hi'); a new execution
+	context is created and pushed to the execution stack. Within this execution context our function creates a function
+	on the fly and returns it.. along with that it also has its own variable environment.. regardless.. the greet execution
+	context is popped off the stack right after the return
+
+	Now the question is.. we said every execution context has this space in memory where the variables inside of the context
+	live.. What happens to that memory space when the execution context goes away? Well, under normal circumstances the
+	javascript engine would eventually clear it out with a process called garbage collection..
+
+	But at the moment the execution context finishes, that memory is still there.. It's still hanging around. The execution
+	context may be gone but the variables are just sitting there somewhere in memory.
+
+	Alright.. so we move on to the global execution context and invoke the function that sayHi is pointing to.. it's an
+	anonymous function because we didn't give it a name when returning it and the act of invoking it creates a new execution
+	context.. And we've passed the name variable and set it to 'Pius' and that will end up in the variable environment
+	for this execution context..
+
+	When we hit the line console.log(whattosay + ' ' + name); .. when its code is invoked and javascript sees the whattosay
+	variable, what does the javascript engine do?!!?!?
+
+	Well, it goes up the scope chain to find the variable whattosay.. and even those the execution context for greet is
+	gone.. the anonymous function still has a reference to its outer lexical environment and hence the variable environmnet
+	for this memory space..
+
+	In other words.. even those the greet function is finished, any function within the greet function.. when they are called..
+	they will still have a reference to that greet function's memory.. to the variables and functions that were in its execution
+	context
+
+	In this situation we say.. the execution context has "closed in" its outer variables.. The variables that it would normally
+	have reference to anyway.. even though those execution contexts are gone.. So this phenomenon of the execution context
+	closing in all the variables it would normally have access to is called a closure..
+
+	A closure isn't something you type or tell the javascript engine to do. Closures are simply a feature of the javascript
+	programming language. They just happen. We don't have to make sure that the execution context of the outer environment is running..
+	The javascript engine will make sure that the current execution context will have access to the variables that it's supposed
+	to have access to.. It will make sure that its scope is intact
+*/
+
+/*
+	Understanding Closures Part 2:::
+		
+		- When doing research on closures, you're bound to run into this example as far as why closures can make your code hard to
+			anticipate. But if you understand what's going on under the hood, that's actually not the case.. so we'll look at this
+			example and analyze it to see if we can have a clear understanding of what's going to happen when the code is run.
+*/
+
+function buildFunctions() {
+	var arr = [];
+
+	for (var i = 0; i < 3; i++) {
+		arr.push(
+			function() {
+				console.log(i);
+			}
+		)
+	}
+}
+
+var fs = buildFunctions();
+
+fs[0]();
+fs[1]();
+fs[2]();
+
+/*
+	What do you expect the output to be!?!??!
+
+	var i and arr are also called free variables - variables that are outside of the function that you have access to..
+
+	So how can we preserve the value of i when we access it later from our functions??
+		- In ES6, 'let' will allow us to create block-scoped variables. Essentially, these variables will have distict memory
+			space in each block from the memory space outside that block
+		- In order to preserve i we need to execute a function on the fly to preserve the variable in its own execution context
+*/
+
+function buildFuctions2() {
+	var arr = [];
+	for (var i = 0; i < 3; i++) {
+		arr.push(
+			(function(j){
+				return function() {
+					console.log(j);
+				}
+			}())
+		);
+	}
+}
+
+var fs2 = buildFuctions2();
+
+fs2[0]();
+fs2[1]();
+fs2[2]();
+
+/*
+	Framework Aside: Function Factories
+		- A factory is a function that returns (or makes) other things for you.
+
+	So the makeGreeting factory will return another function.
+
+
+
+*/
+
+function makeGreeting(language) {
+	return function(firstname, lastname) {
+		if (language === 'en') {
+			console.log('Hello ' + firstname + ' ' + lastname);
+		} else if (language === 'es') {
+			console.log('Hola ' + firstname + ' ' + lastname);
+		}
+	}
+}
+
+var greetEnglish = makeGreeting('en');
+var greetSpanish = makeGreeting('es');
+
+greetEnglish('John', 'Doe');
+greetSpanish('John', 'Doe');
+
+
+/*
+	greetEnglish is a function object whose closure points to language being 'en' whereas
+	greetSpanish is a function object whose closure points to language being 'es'.
+
+	It's important to realize that even though it's the same function being called, a new execution context
+	is created and new memory space is allocated for that execution context.
+
+	So we're using makeGreeting as a function factory.. essentially to make functions that always have access to the
+	initial parameter that we pass.
+
+	Any function that's created within another function has a reference to the variables of its outer environment..
+	The CLOSURE of a function is the closing in of the variable in the outer environment.. in other words, the current
+	execution context will always have a reference to the variables in its outer environment.
+
+	Although closures may be a difficult thing to wrap your head around at first go, you've probably already used
+	closures if you've written javascript
+*/
+
+/*
+	If you've used jQuery or setTimeOut you've taken advantage of closures!!
+*/
+
+function sayHiLater() {
+	var greeting = 'Hi';
+
+	setTimeOut(function() {
+		console.log(greeting);
+	}, 3000);
+}
+
+sayHiLater();
+
+/*
+	Callback function:
+		- A function you give to another function, to be run when the other function is finished.
+		- So the function you call (i.e. invoke), 'calls back' by calling the function you gave it when it finishes.
+*/
+
+function tellMeWhenDone(callback) {
+	//.... some work
+
+	callback();
+}
+
+tellMeWhenDone(function() {
+	console.log("I am done...");
+});
+
+/*
+	Call(), Apply(), and Bind()
+
+	An execution context has 3 main things that are created for us as we've discussed:::
+		- Variable Environmnet
+		- 'this' (e.g. window in browser) or the object that contains the function we're running in
+		- Outer Environment
+	
+	Wouldn't it be nice to control what the 'this' keyword ends up being when the execution context is created??!?!
+	Well Javascript has a way to do that.. that's where call, apply and bind come in!!
+
+	We could have talked about this before when we talked about objects, functions and 'this', but in order to understand
+	call, apply and bind we needed to have a complete understanding of first-class functions..
+
+	So we already know that functions are special types of objects::
+		- name property (optional if function is anonymous)
+		- code property (this is invokable and allows the function to be invoked)
+		- All functions have access to a call(), apply() and bind() method
+			- All 3 of these have to do with the 'this' keyword and all the variables you pass to the function as well.
+			- Recall that the 'this' keyword references the object that contains the method
+
+*/
+
+var person = {
+	firstname: 'John',
+	lastname: 'Doe',
+	getFullName: function() {
+		var fullname = this.firstname + ' ' + this.lastname;
+		return fullname;
+	}
+}
+
+// This by itself will fail.. why!??!
+var logName = function(lang1, lang2) {
+	console.log('Logged: ' + this.getFullName());
+}
+
+logName();
+
+// Why will this work?!
+
+var logPersonName = logName.bind(person); // we are passing the object that we want to be the 'this' variable within the function
+
+logPersonName();
+
+/*
+	Recall that all functions have the methods bind, apply and call.
+
+	The bind() function returns a new copy of the function that it's invoked from. So that when the returned function is run and its
+	execution context is created, the javascript engine sees that it was setup with the bind method and thus sets up some things in 
+	the background so that when the javascript engine decides, what is the 'this' variable.. it says, oh, well it must be the object
+	that was passed into bind()..
+
+	So essentially, we're effecting the javascript engine as far as what it decides when creating the 'this' variable during the
+	creation phase of the execution context
+*/
+
+/*
+	When calling a function we can use call() and if need by we can pass the object that we want the 'this' keyword to be.
+
+*/
+
+// These are equivalent!!!
+logName();
+logName.call(); 
+
+// This changes the 'this' keyword to be the person object
+logName.call(person); 
+
+// We can also pass parameters to call.. these parameters will be passed to the logName function!!
+logName.call(person, 'en', 'es');
+
+// With apply() we pass an array of the parameters!!!
+logName.apply(person, ['en', 'es']);
+
+
+/*
+	bind() sets the 'this' keyword to the object that's passed.. without invoking the function.. in fact a new reference is created.
+
+	call() sets the 'this' keyword to the object that's passed and can access arguments that will be passed to the function.. using
+	this method invokes the function but uses the same reference rather than creating a new function..
+	
+	apply() does the exact same thing as call() except that we pass the arguments in an array!!!
+		- An array can be more useful, especially under mathematical circumstances..
+	
+	What if we use call or apply with and IIFE?!
+*/
+
+(function() {
+
+	console.log('Logged: ' + this.getFullName());
+
+}).apply(person, ['en', 'es']);
+
+/*
+	When could you actually use these methods in real-world applications?!?!?
+
+	With bind(), you're creating a new copy of the function.. so what happens when you pass parameters to bind() ??!
+	Setting parameters to bind() sets permanent values to the parameters when the copy is made..
+*/
+
+// Example 1: Function borrowing
+
+var person2 = {
+	firstname: 'Pius',
+	lastname: 'Nyakoojo'
+};
+
+console.log(person.getFullName.apply(person2));
+
+// Example 2: Function currying
+
+function multiply(a, b) {
+	return a*b;
+}
+
+var multiplyByTwo = multiply.bind(this, 2);
+
+/*
+	By setting 2.. we're saying that the first parameter 'a' will always be a 2 in this copy of the function..
+
+	It is equivalent to the following
+
+		function multipleByTwo(b) {
+			var a = 2;
+			return a*b;
+		}
+
+	Recall, bind() doesn't invoke the function but rather returns a new function.. well in our new function, we've set
+	the a value to be permanently 2.. so when we call multiplyByTwo we pass a single variable which will be 'b'
+*/
+
+console.log(multipleByTwo(4)); // 8
+
+/*
+	Function currying:
+		- Creating a copy of a function but with some preset parameters..
+			- very useful in mathematical situations.
+
+*/
+
+/*
+	Functional Programming!!!
+		- Although javascript sounds like it's related to the java programming language or looks like the C# or C++..
+			it really has more in common with other functional programming languages. Languages like lisp, or schema
+			or ML.. these are languages that have first-class functions
+
+*/
