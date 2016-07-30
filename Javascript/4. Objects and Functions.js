@@ -1051,5 +1051,50 @@ console.log(multipleByTwo(4)); // 8
 		- Although javascript sounds like it's related to the java programming language or looks like the C# or C++..
 			it really has more in common with other functional programming languages. Languages like lisp, or schema
 			or ML.. these are languages that have first-class functions
-
+	
 */
+
+function mapForEach(arr, fn) {
+	var newArr = [];
+
+	for (var i = 0; i < arr.length; i++) {
+		newArr.push(
+			fn(arr[i])
+		);
+	}
+
+	return newArr;
+}
+
+
+var arr1 = [1,2,3];
+console.log(arr1);
+
+/* Old code... not functional
+var arr2 = [];
+
+for (var i = 0; i < arr1.length; i++) {
+	arr2.push(arr1[i] * 2);
+}
+*/
+
+var arr2 = mapForEach(arr1, function(item){
+	return * 2;
+});
+
+console.log(arr2);
+
+var arr3 = mapForEach(arr1, function(item){
+	return item > 2;
+});
+
+/*
+	Segmenting code into functions is called functional programming.. This is very useful
+*/
+
+var checkPastLimit = function(limiter, item) {
+	return item > limiter;
+}
+
+var arr4 = mapForEach(arr1, checkPastLimit.bind(this, 1));
+console.log(arr4);
