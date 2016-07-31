@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>My Page</title>
+	<link rel="stylesheet" href=""/>
+</head>
+<body>
+	
+	<div id='loginDiv'>
+		<select id="lang">
+			<option value="en">English</option>
+			<option value="es">Spanish</option>
+		</select>
+		<input type="button" value='Login' id='login'>
+	</div>
+	<h1 id='greeting'></h1>
+
+
+	<script src="jquery-3.1.0.js"></script>
+	<script src="Greetr.js"></script>
+	<script>
+		
+		var g = G$('John', 'Doe');
+
+		g.greet().setLang('es').greet(true).log();
+
+		$('#login').click(function() {
+			var loginGrtr = G$('John', 'Doe');
+
+			$('#loginDiv').hide();
+
+			loginGrtr.setLang($('#lang').val()).HTMLGreeting('#greeting', true).log();
+		})
+	</script>
+</body>
+</html>
