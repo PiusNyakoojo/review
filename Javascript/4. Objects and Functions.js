@@ -1096,5 +1096,49 @@ var checkPastLimit = function(limiter, item) {
 	return item > limiter;
 }
 
+var checkPastLimit2 = function(limiter) {
+	return function(item) {
+		return item > limiter;
+	}.bind(this, limiter);
+}
+
 var arr4 = mapForEach(arr1, checkPastLimit.bind(this, 1));
 console.log(arr4);
+
+var arr5 = mapForEach(arr1, checkPastLimit2(1));
+console.log(arr5);
+
+/*
+	Rather than mutating data within a function, it's better to return something new.. avoid changing data when we're
+	passing it around in functions. Rather, return anoter object or representation of that data.
+
+*/
+
+/*
+	The Underscore.js library helps you would with arrays, collections and objects. The really neat thing about Underscore.js,
+	besides how incredibly useful it is, is that it made an effort to show how it implemented what it did. 
+
+	"Open Source Education" - There are a bunch of excellent javascript libraries out there where the source code is available for
+	free. You can read the code and figure out how things work under the hood, FOR FREE!
+	
+	Underscore.js uses a lot of functional programming concepts. They're almost always passing what's called a ideratee or predicate.
+
+	There's another javascript library called lodash which implements similar functionality and gets better performance.
+*/
+
+/*
+	Using underscore.js :::
+		- Underscore's map is a lot more useful than the one we just wrote because it covers a lot more scenarios.
+*/
+
+var arr6 = _.map(arr1, function(item) { return item * 3 });
+console.log(arr6); // [3,6,9]
+
+var arr7 = _.filter([2,3,4,5,6,7], function(item){
+	return item % 2 === 0;
+});
+console.log(arr7); // [2,4,6]
+
+/*
+	Always think about how you can write re-usable code.!
+*/
