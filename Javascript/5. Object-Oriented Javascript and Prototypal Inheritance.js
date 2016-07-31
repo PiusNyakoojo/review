@@ -89,3 +89,144 @@ var jane = {
 jane.__proto__ = person;
 
 console.log(jane.getFullName()); // Jane Default
+
+/*
+	Everything is an object (or a primitive) in javascript
+
+		- The base object 'Object' is at the very bottom of the prototype chain ALWAYS
+			- All objects get access to .toString()
+
+		- The prototype of all function is function Empty() {}
+			- All functions get access to the .apply(), .bind(), .call()
+
+		- The prototype of all arrays is an empty array []
+			- All arrays have access to .push(), .pop() etc..
+			- Because any array we create, the javascript engine sets its prototype to this build in javascript object
+*/
+
+var a = {};
+var b = function() {};
+var c = [];
+
+/*
+	a.__proto__ // Object {}
+	b.__proto__ // function Empty() {}
+	c.__proto__ // []
+	
+	b.__proto__.__proto__ // Object {}
+	c.__proto__.__proto__ // Object {} // remember because that's at the bottom of the prototype chain always?!
+*/
+
+/*
+	Reflection and Extend
+
+		- Reflection
+			- An object can look at itself, listing and changing its properties and methods.
+			- We can use this to implement a very useful design pattern called 'Extend'
+
+*/
+
+var person = {
+	firstname: 'Default',
+	lastname: 'Default',
+	getFullName: function() {
+		return this.firstname + ' ' + this.lastname;
+	}
+};
+
+var john = {
+	firstname: 'John',
+	lastname: 'Doe'
+};
+
+// Don't do this....
+
+john.__proto__ = person;
+
+for (var prop in john) {
+	console.log(prop + ': ' + john[prop]);
+}
+
+/*
+	firstname: John
+	lastname: Doe
+	getFullName: function() {
+		return this.firstname + ' ' + this.lastname;
+	}
+
+*/
+
+/*
+	Woah! This might look strange because we only set the direct properties of john to be firstname and lastname.
+
+	However, it appears that the javascript engine went down the prototype chain and grabbed the other properties and methods
+	(in our case, the getFullName method)
+
+	This can be useful but what if we just want to grab the properties and method at the root.. rather than within the prototype chain?
+	
+	Use .hasOwnProperty()
+		- This doesn't sit on john or person, it sits on the base object of john
+*/
+
+for (var prop in john) {
+	if (john.hasOwnProperty(prop)) {
+		console.log(prop + ': ' + john[prop]);
+	}
+}
+
+/*
+	firstname: John
+	lastname: Doe
+*/
+
+/*
+	This is how we can reflect on the object and look at its properties.. Look at what's call 'metadata' of its properties
+	Whether that data is really attached to the object or not.
+
+	This reflection concept in turn lets us implement an idea that is very useful. It's sort of a complement to prototypal inheritance.
+
+	But it's not built into javascript. So many frameworks and libraries build it themselves.. it's called Extend!!!!
+
+	The underscore library implements this and we can use it if we include the library!!
+*/
+
+var jane = {
+	address: '111 Main St.',
+	getFormalFullName: function() {
+		return this.lastname + ', ' + this.firstname;
+	}
+};
+
+var jim = {
+	getFirstName: function() {
+		return firstname;
+	}
+};
+
+/*
+	Maybe one of these objects has a lot of properties and methods that we don't want to be in the prototype chain of
+	another object. So this is where extending comes into play.
+*/
+
+// Here, we are extending john
+
+_.extend(john, jane, jim);
+
+/*
+	this composes or combines these objects. It takes all the properties and methods of these other objects and adds them
+	directly to john
+*/
+
+console.log(john);
+
+/*
+	Object {
+		firstname: 'John',
+		lastname: 'Doe',
+		address: '111 Main St.',
+		getFormalFullName: function() {// ...},
+		getFirstName: function() {// ...},
+		__proto__: Object
+	}
+
+*/
