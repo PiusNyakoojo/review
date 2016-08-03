@@ -76,7 +76,39 @@
 	Google's Javascript engine: V8 is Open source (code.google.com/p/v8)
 		- V8 was primarily written to be used within the google chrome browser, however, it's also built in a way that would allow it to be used
 			elsewhere.
+		- V8 takes Javascript code and input and outpus machine code for the specific processor our computer uses.
+		- In addition, we can take V8 and place it within our own C++ program and somewhere in our program we will be able to convert javascript
+			to machine code. And because we're using V8, there are hooks we can use to add features to javascript before compiling it.
+		- V8 can run standalone, or can be embedded into any C++ application!!!
+			- There's an entire guide on how to embed V8 into your C++ application.
+			- V8 has hooks that we can access through C++ program.
+			- If someone writes something in javascript, we can respond to that by doing additional things with our own custom C++ code. So essentially
+				we are adding custom features to how javascript behaves. Our program will read and understand more than what the ECMASCRIPT standard
+				specifies and what the V8 engine implements. This is really powerful because C++ has far more features that javascript does. Javascript
+				was designed to be a browser language. It wasn't designed to deal with lower-level operations like dealing with files and folders
+				that are sitting on your harddrive or connecting directly to a database. C++ was designed to do that. C++ was designed closer to the
+				machine.
 
+				So that means we can write things in C++ that javascript doesn't have. We can make anything we can do in C++ available to the javascript
+				code.
 
+	If we build the V8 engine we can go to build/Debug/shell.cc and run that through the CLI in windows.
 
+		shell
+			- This command will run the shell and we can type javascript code and see what the engine does with that code e.g.
+				var a = 1; a // 1
+
+		shell --print_code
+			- This command will run the shell and also print out the machine code for this particular machine that the V8 engine returns.
+
+	In the shell.cc file we can tell the V8 engine to take any statement that says 'print' and map it to the C++ native print function.
+	So even though print() isn't defined in ECMASCRIPT standards (actually, you can use print() to print a page), we've allowed it to mean
+	something by attaching this interpretration in our C++ application.
+	
+	load('somefile.js'); can also be made to work even though load() is not defined in ESCMASCRIPT standards.
+	
+	This is essentially what Node.js is.. it is a C++ application that has V8 embedded and adds a bunch of features to javascript that are 
+	available to us in C++. Nodejs in particular has added the features that make it suitable to be web server technology.
+
+	So what are the features that Nodejs adds to V8?? Well that's what we'll talk about for the rest of the course..
 */

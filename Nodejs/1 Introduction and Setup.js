@@ -42,4 +42,6 @@
 			- List of helpful commands
 		cat <filename>
 			- Stream a file (e.g. cat hello.txt could return: "Hello, this is text.")
+		cls
+			- Clear the console screen
 */
