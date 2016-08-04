@@ -23,7 +23,30 @@
 	javascript language that ARE NOT specified in the ECMASCRIPT standards.. These are things that the Chrome application adds to the javascript language
 	to allow additional features like manipulating the DOM or performing asynchronous requests to a Web Server. Javascript as specified by the ECMASCRIPT
 	standards does not support manipulating the DOM.. it doesn't know what that is.. it doesn't know how to perform asynchronous events.. it doesn't know
-	what that is.. Javascript by itself is synchronous.. meaning it runs on a single thread 
+	what that is.. Javascript by itself is synchronous.
 
+	
+	Nodejs isn't just used as a web server but it's most popular for this context so we don't have to switch between languages when working
+	on both the browser and server side of developing web applications.
+*/
+
+/*
+	What does Javascript need to manage a server?!?!
+
+		- Javascript needs a better way to organize its code into re-usable pieces.
+			- The new version of javascript (ES6) has ways for us to do this (export, import)
+			- Nodejs has its own way of making this possible
+		- A way to deal with files
+			- If you're a web server, you're likely going to need a way to deal with files, whether they are zip files or images, etc..
+		- A way to communicate with a database
+			- Web servers will fetch data from database in most applications.
+		- Ability to communicate over the internet
+			- Javascript by default doesn't have that.. it's not in the ECMASCRIPT standard specifications
+		- The ability to accept requests and send responses (in the standard format)
+		- A way to deal with work that takes a long time
+			- We want other people to access the web server even when it's doing work for other users
+
+		These are just a few problems that we need to consider when building a web server technology.
+	
 
 */
