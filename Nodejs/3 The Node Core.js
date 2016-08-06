@@ -48,5 +48,18 @@
 
 		These are just a few problems that we need to consider when building a web server technology.
 	
+	While C++ is the core side of Node.js, there is another side: The Javascript Core
+	There are plenty of C++ utilities within Node.js; however, There is also pure javascript written for you to make
+	using those features easier. Node.js includes a lot of wrappers around the C++ functions to make development easier.
 
+	For example, zlib.js is for dealing with zip files and fs.js is for handling files.
+
+	You may also encounter the line
+		var binding = process.binding('some-file');
+
+	This takes some C++ feature and makes it available in javascript. So this is essentially going out and getting the some-file
+	C++ objet. However, not all the javascript features are about wrapping around C++ features. For example, util.js is just a bunch
+	of functions that are useful. Things that we could have written ourselves, but were given to us for free by the Nodejs team.
+
+	So we can see that Node.js is a framework as well as a library of code.
 */
