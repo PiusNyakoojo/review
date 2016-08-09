@@ -77,3 +77,5 @@ An arrow function expression has a shorter syntax compared to function expressio
 Arrow functions are always anonymous.
 
 */
+
+setTimeout(() => console.log("hey"), 3000);
