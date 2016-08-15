@@ -250,4 +250,97 @@ resolve: {
 /*
 	So now when webpack finds the './login', it will look for login.js OR a login.es6
 
+	Save the file -> webpack-dev-server
 */
+
+/*
+	Now let's add support for JSHint. Create a .jshintrc file
+
+	Instead of adding jshint as a loader, we'll add it as a preloader. As you may have guessed, preloaders are processed
+	before loaders are. This is useful for example to check your files for linting errors.
+
+
+*/
+
+module: {
+	preLoaders: [
+		{
+			test: /\.js$/,
+			exclude: 'node_modules',
+			loader: 'jshint-loader'
+		}
+	],
+	loaders: [/*.. */]
+}
+
+/*
+	As we've discussed, webpack is typically a replacement for Grunt or Gulp. Grunt and Gulp are nice because you can create
+	a whole bunch of commands that you can run under different circumstances. And they're usually short.
+
+	With webpack we don't really have the functionality. Anytime we want to re-run our server we have to run webpack-dev-server
+	from the command line. Later on we may need to add more commands and that can get tricky.
+
+	But webpack doesn't necessarily need that functionality because npm has that functionality built into it. You can use the
+	scripts object in the package.json.
+*/
+
+"scripts": {
+	"start": "webpack-dev-server"
+}
+
+/*
+	Before we send our code into production, we need to add a few things
+
+		- Minification
+			- We may not want this in development because we want to be able to read our code if we're trying to debug it.
+		- Removing console logs and unnecessary code
+			- Of course we probably want to do this in development.
+
+	To minify our code with webpack, run the following command
+
+		webpack -p
+*/
+
+/*
+	To remove unnecessary code from our build, we'll need another loader: strip-loader
+
+		npm i -D strip-loader
+	
+	Now we'll create a new config file that's specifically for production builds. name it
+
+		webpack-production.config.js
+
+	We don't want to replace all the settings inside webpack.config.js, we just want to extend those settings
+*/
+
+// webpack-production.config.js
+var WebpackStrip = require('strip-loader');
+var devConfig = require('./webpack.config.js');
+var stripLoader = {
+	test: [/\.js$/, /\.es6$/],
+	exclude: /node_modules/,
+	loader: WebpackStrip.loader('console.log')
+}
+
+devConfig.module.loaders.push(stripLoader);
+
+module.exports = devConfig;
+
+/*
+	Now to run this production config
+
+		webpack --config webpack-production.config.js
+
+	Now to run the build, instead of using the webpack-dev-server (because it will rebuild the application), we want to use
+	the http-server node module
+
+		http-server
+
+	If we want to strip multiple things, we just add more arguments to the webpackStrip.loader()
+*/
+
+var stripLoader = {
+	test: [/\.js$/, /\.es6$/],
+	exclude: /node_modules/,
+	loader: WebpackStrip.loader('console.log', 'perfLog')
+}
