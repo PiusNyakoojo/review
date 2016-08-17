@@ -40,4 +40,38 @@
         - The core of the math that computers are based on. Each one or zero is called a 'bit' or 'binary digit'
     
     0101 = 5 base 10
+
+    Character Set
+        - A representation of characters as numbers
+        - Characters to Numbers in base 10
+        - Each character gets a number. Unicode and ASCII are character sets.
+        - When we talk about character sets, we're asking, What number is each character represented by?
+
+    Unicode is a character sets
+
+    'h' -> 104
+    'e' -> 101
+    'l' -> 108
+    'l' -> 108
+    'o' -> 111
+
+    Character Encoding
+        - How characters are stored in binary
+        - Numbers from base 10 to numbers in base 2
+        - The numbers (or code points) are converted and stored in binary.
+        - When we talk about character encoding, we're asking, How many bits are we using to store
+        each number? The more bits, the more characters we can store because the number can be potentially
+        bigger.
+
+    UTF-8
+        - This means we're using 8 bits to store each number
+
+    Javascript is good with character sets: translating numbers to characters and vise versa. But when
+    it comes to encoding, javascript sucks. Because of that, Node, with the assistance of the V8 engine
+    expands the javascript language and gives us some mechanisms to deal with binary data, 0s and 1s.
+
+    This is good because when we're dealing with information coming from the internet, or files that
+    are being streamed, we need to deal with binary data in some way.
+
+    Buffers
 */
