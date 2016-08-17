@@ -4,12 +4,14 @@
 	Agenda:
 		- CSS & Style Loaders
 		- Loader Implementation
-			- How do these loaders do their job
+			- How do these loaders do their job: writing the style tag into the head of our document
 		- Using SASS
 		- Using LESS
 		- Separate CSS Bundle
+			- In case we don't want our css styles written to the head of our document
 		- Auto Prefixer
 			- Works when using more cutting edge features in CSS
+			- prefixes the css rules using the correct browser prefixes
 */
 
 /*
@@ -50,3 +52,35 @@ module: {
 // app.js
 require('../css/bootstrap.css');
 require('../css/app.css');
+
+
+/*
+		webpack-dev-server -p
+
+	this will also minify your .css along with .js files
+*/
+
+/*
+	To add a SASS loader
+
+		npm i -D sass-loader
+*/
+
+/*
+	A separate CSS bundle
+
+		npm i -D extract-text-webpack-plugin
+
+*/
+
+/*
+	As browsers implement new features in css, they often require browser-specific prefixes. That's cool and all but there
+	are draw backs because you'll have to understand which features require prefixes. Thankfully there is a node-module that
+	will figure out which features need a prefix
+
+		npm i -D autoprefixer-loader
+
+	Add the loader in between the css-loader and sass-loader in the webpack.config.js
+*/
+
+loader: 'style-loader!css-loader!autoprefixer-loader!sass-loader'

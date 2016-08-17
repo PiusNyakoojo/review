@@ -82,3 +82,27 @@ const server = http.createServer((req, res) => {
 server.listen(port, hostname, () => {
 	console.log(`Server running at http://${hostname}:${port}/`);
 });
+
+/*
+	You may have noticed that Nodejs may have a version that looks like this: 0.12.7
+
+	And yet when we run node -v in the command line, we get 4.x.x or 6.x.x or above..
+
+	This is because of something called io.JS. Node.js was created by a company called Joyent which eventually open sourced
+	Node.js. The people who worked with Joyent and Nodejs were unhappy with how often Nodejs was being updated. Because Node
+	is built on top of the V8 engine, as new versions of V8 were released, they needed to update Node to take advantage of
+	the latest features of V8.
+
+	Because of this discrepency, there was a split in development efforts. Those who wanted to update Node to align to the
+	latest feature of V8 moved to develop the version of Nodejs called io.JS
+
+	Eventually the group that was wanting to maintain 0.12.7 merged with the io.JS group's 3.0 version of node and the result
+	was Node.js v4.0
+*/
+
+/*
+	Breakpoint
+		- A spot in our code where we tell a debugging tool to pause the execution of our code. So we can figure out what's going
+		on in our code
+
+*/

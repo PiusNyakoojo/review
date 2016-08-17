@@ -1,14 +1,13 @@
 var path = require('path');
 
 module.exports = {
-	context: path.resolve('js'),
-	entry: ["./app"],
+	context: path.resolve('public/js'),
+	entry: "./app",
 	output: {
-		path: path.resolve('build/js/'),
-		publicPath: '/public/assets/js/',
+		path: path.resolve('build/'),
+		publicPath: '/public/assets/',
 		filename: "bundle.js"
 	},
-
 	devServer: {
 		contentBase: 'public'
 	},
@@ -19,11 +18,6 @@ module.exports = {
 				test: /\.css$/,
 				exclude: /node_modules/,
 				loader: "style-loader!css-loader"
-			},
-			{
-				test: /\.scss$/,
-				exclude: /node_modules/,
-				loader: "style-loader!css-loader!sass-loader"
 			}
 		]
 	},
