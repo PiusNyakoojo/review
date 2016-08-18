@@ -156,6 +156,7 @@ var greet2 = fs.readFile(__dirname + '/greet.txt', 'utf8', function(err, data) {
 /*
     Stream
         - A sequence of data that is broken up into chunks.
+        - Rather than dealing with data all at one time, we can deal with it a chunk at a time.
 
     chunk
         - A piece of data being sent through a stream.
@@ -264,4 +265,43 @@ readable.pipe(writable); // send the readable information to the writable stream
 
     With windows, we can't just right click on a gzip and unzip it. Usually we have to use a software. But
     with mac or linux this software is usually provided for us.
+*/
+var fs = require('fs');
+var zlib = require('zlib');
+
+var readable = fs.createReadStream(__dirname + '/hello.txt');
+
+var compressed = fs.createWritableStream(__dirname + '/hello.txt.gz');
+var gzip = zlib.createGzip(); // this creates a transform stream
+
+readable.pipe(gzip).pipe(compressed);
+
+/*
+    Method Chaining
+        - A method returns an object so we can keep calling more methods.
+        - sometimes it returns the parent object (called 'cascading') and sometimes some other object
+
+    Asynchronous applications and apps that use Streams help improve Node's performance over using 
+    synchronous function calls.
+
+    To unzip with zlip
+
+        gUnzip = zlib.createGunzip();
+    
+    The popular Gulp task runner uses custom streams and pipes things around to get certain output.
+*/
+
+/*
+    Web Server Checklist
+        - Better ways to organize our code into reusable Pieces
+            - Nodejs provides modules for us to do this.
+            - ES6 modules are now available as they're implemented by the javascript engine V8 that Node uses
+        - Ways to deal with files
+            - Node's internal fs module allows us to create readable and writable streams to look at or change files
+            - Node has provided both synchronous and asynchronous abilities to pull binary data into a buffer.
+            - The binary data in buffers is available for us to work with.
+            - Asynchrony allows us to run tasks in the background and then we can handle the completion of the
+            task 
+
+
 */
