@@ -1,0 +1,30 @@
+<html>
+    <head>
+        <script src='https://code.jquery.com/jquery-1.11.3.min.js'></script>
+    </head>
+    <body>
+        <form method="POST" action="/person">
+            First name: <input type="text" name='firstname'><br/>
+            Last name: <input type="text" name='lastname'><br/>
+            <input type='submit' value='Submit' />
+        </form>
+
+        <input type='button' value='SUBMIT JSON' onClick='postJson()' />
+
+        <script>
+
+            function postJson() {
+                $.ajax({
+                    type: 'POST',
+                    url: '/personjson',
+                    data: JSON.stringify({ firstname: 'Poopy', lastname: 'poop face'}),
+                    dataType: 'json',
+                    contentType: 'application/json',
+                    success: function(data) {
+                        console.log("data: " + data);
+                    }
+                });
+            }
+        </script>
+    </body>
+</html>

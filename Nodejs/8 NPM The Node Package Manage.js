@@ -63,4 +63,35 @@
 /*
     Init, Nodemon and package.json
 
+        npm init // create package.json
+    
+        npm install moment --save // saves moment in package.json
+
+    ~2.10.6 // only update patches if they're available
+    ^2.10.6 // only update if a minor release is out.
+
+    When requiring a node package, Node will first check to see if it's a core module. If not it will
+    check to see if it's in the node_modules folder in the __dirname
+*/
+
+/*
+    Development dependencies:
+
+    Jasmine
+        - A tool to help us write tests for our software as we build it.
+
+        npm install jasmine-node --save-dev
+
+        or
+
+        npm i -D jasmine-node
+
+    Nodemon
+        - Stands for node monitor. It watches the files for changes and reloads the application when a change is made.
+
+        npm i -g nodemon
+
+
+        npm update // will update to the latest version of all the dependecies we use
+    
 */
