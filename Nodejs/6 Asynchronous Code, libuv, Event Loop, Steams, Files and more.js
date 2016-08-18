@@ -164,9 +164,18 @@ var greet2 = fs.readFile(__dirname + '/greet.txt', 'utf8', function(err, data) {
     Streams in Nodejs are essentially event emitters. If we look at the stream source code, we see that
     stream inherits from event emitter.
 
-    Abstract Class or Base Class:
+    Readable streams can only be read from.
+    Writable streams can only be written to. You can't read them.
+    Duplex streams let you do both reading and writing to a stream.
+    Transform streams let you change the data as it moves through the stream. So the data in the stream
+        can be written to and when it's read, it will be different.
+
+    Abstract Class or Base Class (a Base Class doesn't have to be an abstract class in all cases):
         - A type of constructor you never work directly with, but inherit from.
         - We create new custom objects which inherit from the abstract base class.
+        - Since Stream is an Abstract Class, we never actually create an object using the new operator.
+        - Streams don't implement certain methods that are needed in order to actually use them. They implement
+        the base of the idea of a stream. Then it's up to us to decide how we're reading and writing information.
 
     With Streams in Nodejs, we have different types of Streams which actually inherit from the Stream Abstract
     Class. And since Stream inherits from EventEmitter, all streams that inherit the Stream Abstract Class are
@@ -180,4 +189,79 @@ var greet2 = fs.readFile(__dirname + '/greet.txt', 'utf8', function(err, data) {
 
     So in the Web Swerver - Browser model, the Request stream that's sent from the browser to the server is
     a readable stream from Node's perspective. On the other hand, the Response stream is writable.
+
+    When we read from a stream with fs.createReadStream(), our file is placed on a buffer. if our file fits
+    or is smaller than the buffer space, then we'll have all of the data of the file. If the text file is
+    bigger than the text file, then we'll get 1 chunk at a time, where each chunk is less than or equal to
+    the size of the buffer.
+
+    The highWaterMark key in the options object allows us to set the size of the buffer for out stream.
+*/
+
+var fs = require('fs');
+
+var readable = fs.createReadStream(__dirname + '/greet.txt', {
+    encoding: 'utf8', // utf8 encoding
+    highWaterMark: 2 * 1024 // 2 kilobytes
+});
+
+readable.on('data', function(data) {
+    console.log(data.length);
+});
+
+/*
+    Creating a Writable Stream
+*/
+
+var writable = fs.createWriteStream(__dirname + '/greet2.txt');
+
+writable.write('Hello World!');
+
+/*
+    Pipes
+        - Connecting two streams by writing to one stream what is being read from another.
+        - In Node, you pipe from a Readable stream to a Writable stream.
+
+    This code is so common in Nodejs that there is a more efficient way of doing it now: Pipes.
+*/
+
+var fs = require('fs');
+
+var readable = fs.createReadStream(`${__dirname}/greetings.txt`, {
+    encoding: 'utf8',
+    highWaterMark: 4 * 1024 // 4 kilobytes
+});
+
+var writable = fs.createWriteStream(`${___dirname}/greetingsCopy.txt`);
+
+readable.on('data', function(data) {
+    writable.write(data); // this is a very common occurence in Node libraries; it is more efficient to use pipes
+});
+
+/*
+    A method called pipe is available on any readable stream.
+        - takes a destination, where we send data from the stream.
+*/
+
+var fs = require('fs');
+
+var readable = fs.createReadStream(__dirname + '/greet.txt');
+
+var writable = fs.createWriteStream(__dirname + '/greetCopy.txt');
+
+readable.pipe(writable); // send the readable information to the writable stream
+
+/*
+    pipe() actually returns the destination so if our writable stream is also a readable stream, we can
+    use pipe() again to send it to another writable stream.
+
+    We don't have to stream data from one file to another file. We can stream data to anything that is a stream.
+    For example, an internet connection to a file or vise versa.
+
+    We're going to use zlib, which is part of node core. This module allows us to implement a gzip file (a
+    file that is compressed). gzip is a common algorithm for compressing files. Node uses the zlib module
+    to compress and uncompress files.
+
+    With windows, we can't just right click on a gzip and unzip it. Usually we have to use a software. But
+    with mac or linux this software is usually provided for us.
 */
