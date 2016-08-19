@@ -1,0 +1,23 @@
+<html>
+    <head>
+        <title>Testing Server-side vs Client-side JS knowledge</title>
+    </head>
+    <body>
+        <h1 id='title'></h1>
+        <h2 id='sub-title'></h2>
+        <h2 id='content'></h2>
+        <script>
+            var currentPeople = <%- JSON.stringify(serverPeople) %>;
+        </script>
+        <script>
+            document.getElementById('title').innerHTML = 'Testing Server-side vs Client-side JS knowledge';
+            document.getElementById('sub-title').innerHTML = 'Should this work?!';
+
+            document.getElementById('content').innerHTML = JSON.stringify(currentPeople);
+
+            for (let i = 0; i < currentPeople.length; i++) {
+                console.log(currentPeople[i]);
+            }
+        </script>
+    </body>
+</html>
