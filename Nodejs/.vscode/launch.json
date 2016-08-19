@@ -5,7 +5,7 @@
             "name": "Launch",
             "type": "node",
             "request": "launch",
-            "program": "${workspaceRoot}/tests/express/app3.js",
+            "program": "${workspaceRoot}/tests/mongodb/app.js",
             "stopOnEntry": false,
             "args": [],
             "cwd": "${workspaceRoot}",
