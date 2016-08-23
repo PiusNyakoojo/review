@@ -5,3 +5,10 @@
 		
 		ls -la
 */
+
+/*
+	To verify SHA1 in the terminal
+
+		openssl sha1 [full path to file]
+
+*/
