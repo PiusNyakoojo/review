@@ -127,3 +127,44 @@ gulp.task('inject', () => {
 
 <!-- bower.js -->
 <!-- endbower -->
+
+/*
+	To inject css
+*/
+
+<!-- bower:css -->
+<!-- endbower -->
+
+/*
+	wiredep may not work when injecting CSS (e.g. with the bootstrap package) if the bower file in the same
+	directory as the css is referencing a non css file.
+	
+	we will use overrides metadata in bower.json to 
+*/
+
+"dependenices": {
+	//..
+},
+"overrides": {
+	"bootstrap": {
+		"main": [
+			"dist/js/bootstrap.js",
+			"dist/css/bootstrap.min.css",
+			"less/bootstrap.less"
+		]
+	}
+}
+
+/*
+	Now when wiredep looks at the bower file, it will see the override meta data and use that instead of what's in
+	the bootstrap or font-awesome files
+	
+
+	Now run
+
+		gulp inject
+
+	And in general when running a gulp task
+
+		gulp <task-name>
+*/
