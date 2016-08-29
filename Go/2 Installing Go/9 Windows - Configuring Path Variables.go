@@ -7,6 +7,7 @@
         - GOPATH
             - copying the path from windows explorer
         - Setting a PATH variable to your bin
+            - Set GOBIN to where your binary files will go when installed with go install
             - this allows you to run your executables directly from the terminal e.g.
                 hello.exe 
 */

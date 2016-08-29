@@ -111,3 +111,21 @@
 
         exit
 */
+
+/*
+    To print the current directory (print working directory)
+
+        pwd
+*/
+
+/*
+    To print the environment variables setup:
+
+        env
+*/
+
+/*
+    When you run the command "sudo", the following command is run as if you were the super user, root.
+    The GOPATH variable should not be set for the root. Anything created with sudo will be owned by the
+    root and therefore not, by default, accessible to other users in terms of rwx permissions.
+*/
