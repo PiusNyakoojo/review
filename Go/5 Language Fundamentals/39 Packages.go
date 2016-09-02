@@ -90,8 +90,3 @@ func reverseTwo(s string) string {
 
     However, an exported function can still access the unexported functions within its package.
 */
-
-/*
-
-
-*/
