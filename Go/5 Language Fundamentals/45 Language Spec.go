@@ -20,3 +20,7 @@
         and ends at the end of the innermost containing block.
 
 */
+
+/*
+    A method receiver is what makes a method. We'll learn about that soon.
+*/
