@@ -19,9 +19,6 @@
     of the package. 
 
         import "github.com/piusnyakoojo/rosgo"
-
-    
-
 */
 
 /*

@@ -34,9 +34,33 @@ func main() {
     c := 1.7 
     d := true
 
+    // %v is the value in a default format
     fmt.Printf("%v", a)
     fmt.Printf("%v", b)
     fmt.Printf("%v", c)
     fmt.Printf("%v", d)
-    
 }
+
+/*
+    Declare, assign, initialize:
+
+        var g string 
+            - this is declaring that the variable with identifier b is a string
+
+        g = "cowboy"
+            - this is assigning the variable b with a value of "cowboy"
+
+    When you assign a variable at the same time you declare it, that's called initialization
+
+        var version string = 1.7
+            - version is initialized to 1.7
+
+    You can also do multiple declarations and assignments in a single line
+
+    var a, b string = "this is in a", "this is in b" // package scope
+    var A number, B string = 12, "woah!" // exported
+*/
+
+/*
+    Shorthand method is usually the nicest way :D
+*/

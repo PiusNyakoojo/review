@@ -2,8 +2,14 @@ package main
 
 import "fmt"
 
+func max(x int) int {
+	return 42 + x
+}
+
 func main() {
-	for i := 0; i < 200; i++ {
-		fmt.Printf("%d \t %b \t %X \t %q \n", i, i, i, i)
-	}
+	max := max(7) //
+
+	fmt.Printf("%v", max)
+
+	max()
 }
