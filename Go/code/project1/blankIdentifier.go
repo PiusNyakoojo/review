@@ -1,3 +1,4 @@
+/*
 package main
 
 import (
@@ -14,3 +15,4 @@ func main() {
 
 	fmt.Printf("%s", page)
 }
+*/
