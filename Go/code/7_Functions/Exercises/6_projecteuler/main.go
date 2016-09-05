@@ -34,14 +34,15 @@ package main
 import "fmt"
 
 func main() {
-	// Start at 100 and increase the argument by an order of magnitude until d isn't 0
+	// Start at 100 and increase the argument by an order of magnitude until d isn't 0.
+	// Once you know the answer, 2167 + 1020 = 3187 is the optimal argument
 	arr, m := getNumbers(10000)
 
 	// Initialize the solution variables
 	var d, indexK, indexJ int
 
 	// For each pair of pentagonal numbers, check if they satisfy (2.)
-	// If (2.) is satisfied, check if its smaller than previously recorded value
+	// If (2.) is satisfied, check if the result is smaller than the previously recorded value
 	for j := 1; j < len(arr); j++ {
 		for k := j + 1; k < len(arr); k++ {
 			if m[arr[k]-arr[j]] && m[arr[k]+arr[j]] {
@@ -61,7 +62,7 @@ func main() {
 func getNumbers(n int) ([]int, map[int]bool) {
 
 	arr := make([]int, n)
-	m := make(map[int]bool, n)
+	m := make(map[int]bool)
 
 	for i := 0; i < n; i++ {
 		arr[i] = (i * (3*i - 1)) / 2
