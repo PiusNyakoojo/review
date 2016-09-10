@@ -107,5 +107,26 @@
     } else {
          
     }
+*/
 
+/*
+    A map is an unordered group of elements of one type, called the element type, indexed by a set of unique keys 
+    of another type, called the key type. The value of an uninitialized map is nil. 
+
+    MapType = "map" "[" KeyType "]" Element Type .
+    KeyType Type .
+
+    The comparison operators == and != must be fully defined for operands of the key type; thus the key type must 
+    not be a function, map, or slice. If the key type is an interface type, these coparison operators must be 
+    defined for the dynamic key values; failure will cause a run-time panic.
+
+    Creating a map with make() takes a map type with an optional argument of capacity hint if you suspect your map 
+    will not exceed a certain capacity.
+
+    Sometimes we need to distinguish between whether an entry in a map is the zero value or if it's actually in the 
+    map or not. we can use the "comma ok" idiom to fetch whether or not a key-value pair exists in the map with 
+
+        value, exists := map[someKey]
+
+        val, ok := map[someKey] // this is the idiomatic way of writing the above code.. "comma ok" idiom. 
 */
