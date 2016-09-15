@@ -70,7 +70,6 @@ func main() {
    In Go, we have types and we create values of that type. So p1 is of type person and has whatever value the
    person type provides when we initialize its fields
 
-   Other languages: Classes
-   Golang: Types
-
+   Other languages: Classes (instantiating Classes)
+   Golang: Types (creating values of a type)
 */
