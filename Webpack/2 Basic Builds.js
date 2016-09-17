@@ -25,7 +25,7 @@
 
 	Later on we'll be installing it locally as well + some other modules
 
-	We'll setup am empty directory with app.js and index.html
+	We'll setup an empty directory with app.js and index.html
 
 	Then we'll build this application with webpack
 

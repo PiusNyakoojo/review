@@ -38,5 +38,4 @@
     fmt.Println(num + 6) // doesn't work: mismatched types
     fmt.Println(int(num) + 6) // doesn't work: cannot convert interface to int
     fmt.Println(num.(int) + 6) // 13
-
 */
