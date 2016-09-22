@@ -1,0 +1,29 @@
+<html>
+<head>
+<title></title>
+</head>
+<body>
+    <div class="completion"></div>
+    <script>
+        function ready() {
+            return new Promise((resolve) => {
+                function checkState() {
+                    if (document.readyState !== 'loading') {
+                        resolve();
+                    }
+                }
+                document.addEventListener('readystatechange', checkState);
+                checkState(); // checks if ready state is ready before creating the promise
+            });
+        }
+
+        ready().then(wrapperResolved);
+
+        function wrapperResolved() {
+            var completion = document.querySelector('.completion');
+            completion.innerHTML = 'Resolved!';
+        }
+
+    </script>
+</body>
+</html>

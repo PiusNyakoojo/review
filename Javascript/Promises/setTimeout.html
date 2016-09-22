@@ -1,0 +1,27 @@
+<html>
+<head>
+<title></title>
+</head>
+<body>
+    <div class="completion"></div>
+    <script>
+        function wait(ms) {
+            return new Promise((resolve) => {
+                console.log("Inside promise: ", this);
+                window.setTimeout(function() {
+                    console.log("Inside setTimeout callback: ", this);
+                    resolve();
+                }, ms);
+            });
+        }
+
+        var milliseconds = 2000;
+        wait(milliseconds).then(finish);
+
+        function finish() {
+            var completion = document.querySelector('.completion');
+            completion.innerHTML = "Complete after " + milliseconds + "ms.";
+        }
+    </script>
+</body>
+</html>
