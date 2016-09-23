@@ -12,4 +12,8 @@
         - Goroutines need to be coordinated and synchronized
         - When two or more goroutines attempt to access the same resource, we have a data race
         - Atomic functions and mutexes can provide the support we need. 
+
+    You can check if your code has a race condition by running
+
+        go run -race main.go
 */

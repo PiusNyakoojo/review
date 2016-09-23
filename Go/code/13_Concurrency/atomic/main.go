@@ -4,15 +4,15 @@ import (
 	"fmt"
 	"math/rand"
 	"sync"
+	"sync/atomic"
 	"time"
 )
 
 var wg sync.WaitGroup
-var counter int
+var counter int64
 
 func main() {
 	wg.Add(2)
-
 	go incrementor("Foooo:")
 	go incrementor("Bar:")
 	wg.Wait()
@@ -21,12 +21,9 @@ func main() {
 
 func incrementor(s string) {
 	for i := 0; i < 20; i++ {
-		// counter++
-		x := counter
-		x++
 		time.Sleep(time.Duration(rand.Intn(3)) * time.Millisecond)
-		counter = x
-		fmt.Println(s, i, "Counter:", counter)
+		atomic.AddInt64(&counter, 1)
+		//fmt.Println(s, i, "Counter:", counter) // causes race condition
 	}
 	wg.Done()
 }
