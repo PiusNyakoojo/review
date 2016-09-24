@@ -9,6 +9,8 @@ func main() {
 	in := gen(2, 3)
 
 	// Distribute the sq work across two goroutines that both read from in.
+	// Notice that the more sq(in) we have, the faster the program gets because one of the goroutines
+	// may return faster than all the others.. So the more goroutines we run, the faster our program gets.
 	c1 := sq(in)
 	c2 := sq(in)
 
