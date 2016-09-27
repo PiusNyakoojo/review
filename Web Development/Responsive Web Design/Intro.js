@@ -32,7 +32,6 @@
         max-width: 100%;
     }
 */
-
 /*
     Make sure there are at least 40px of room between 2 tap targets. 40px is about the width of an 
     average finger.
@@ -92,5 +91,83 @@
         }
 
     It's also possible to create queries based on min-device-width or max-device-width.. but this isn't 
-    recommended as min-device-width is based on the device's actual width not the browser width. 
+    recommended as min-device-width is based on the device's actual width not the browser width.
+
+    Setting min-device-width can prevent content from adapting to desktops or laptops that allow the window 
+    to be resized. Because the query is based on the device size not the window. 
+*/
+/*
+    You can use media queries to change the entire layout of a page.
+
+    The point at which a page changes its layout is called a breakpoint. Depending on how your site is layed out, 
+    you may have 1 or several breakpoints.
+
+    Where should you place your breakpoints? Don't choose breakpoints. Look at the content your creating and
+    allow that to guide the breakpoints you set. Don't make breakpoints based on current devices. What is 
+    popular today may not be tomorrow.
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="weather.css"> // always applied
+        <link rel="stylesheet" media="screen and (min-width: 550px)" href="weather-medium.css"> // applied at certain breakpoint
+        <link rel="stylesheet" media="screen and (min-width: 700px)" href="weather-large.css">
+*/
+/*
+    The grid fluid system is an important pattern for designing layouts
+        - columns end up wrapping to the next line as the browser width starts getting smaller.
+        - bootstrap or the 960 grid layout system are easy to use and have everything done already for you. 
+    
+    Flexbox is another important tool you could use for layout
+        - Flexbox fills the extra room available. If your element has some extra room around it, it will 
+        expand to fit. If it is getting crowded, elements will shrink so it takes up as little room as 
+        possible. 
+*/
+/*
+    Flexbox example:
+
+        <div class='container'>
+            <div>Something 1</div>
+            <div>Something 2</div>
+            <div>Something 3</div>
+        </div>
+
+    In a normal layout, these divs are shown one after another in separate rows. Using flexbox we can say:
+
+        .container {
+            display: flex;
+        }
+
+    This will show the divs one after another in the same row.
+
+    By default, flex items fit on a row. So no matter what we set the width of the items, they won't wrap to 
+    the next row. Instead, the browser will resize the divs. We can change this behavior with 
+
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+    This will make it okay for the browser to wrap the element to the next line.
+
+    We can also change the order of elements using the css order attribute. To set the order we can set the order 
+    attribute as follows:
+
+        @media screen and (min-width: 700px) {
+            .dark_blue_item { order: 4; }
+            .light_blue_item { order: 5; }
+            .green_item { order: 2; }
+            .orange_item { order: 3; }
+            .red_item { order: 1; }            
+        }
+
+    OR we can have something like: 
+
+        @media screen and (min-width: 700px) {
+            .header { width: 100%; order: 1; }
+            .red { width: 50%; order: 2; }
+            .orange { width: 50%; order: 3; }
+            footer { width: 100%; order: 4; }
+            .light_blue { width: 20%; order: 5; }
+            .dark_blue { width: 60%; order: 6; }
+            .green { width: 20%; order: 7; }
+        }
 */

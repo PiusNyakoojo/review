@@ -1,0 +1,3 @@
+/*
+    Common responsive techniques for creating responsive layouts.
+*/
