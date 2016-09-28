@@ -35,6 +35,10 @@
         - more colors
         - better compression
         - no licensing issues
+
+    50em refers to font size;
+
+    50em x 16px == 800px
 */
 /*
     Remember: There's no need to send images with natural resolutions higher than their display resolutions 
