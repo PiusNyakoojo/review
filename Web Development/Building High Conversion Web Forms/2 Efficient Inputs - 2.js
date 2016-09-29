@@ -88,3 +88,10 @@
     match a character that isn't allowed in this password:
     /[^A-z0-9\!\@\#\$\%\^\&\*]/g
 */
+/*
+    Testing your forms:
+
+        - Be iterative and be in a process of learning.
+        - Get metrics on how users are actually using the form. 
+        - Talk to people to see how they feel.
+*/
