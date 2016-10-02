@@ -22,3 +22,28 @@
     4. Optimize Your Model
     
 */
+/*
+    There's a difference between a business earning a lot of money and it being profitable.
+        - Build a wonderful, amazing product. So good - they can't ignore it!
+        - Charge money for the service
+        - Profit :O
+
+    "Price is what you pay, value is what you get." - Warren Buffet
+*/
+/*
+    Profit vs. Revenue
+        - Revenue is the total amount of money your company collects.
+        - Profits = Revenue - expenses, operating costs, taxes, interest from loans, depreciation, etc..
+
+    Types of profit:
+        - Gross profit: Total revenue - Cost of Goods Sold (COGS)
+        - Net profit: Total revenue - all expenses
+
+    Cost of Goods Sold:
+        - Cost of making your product. 
+        
+        Retail: $19.99
+        Cost of manufacturing: $5.60 (COGS)
+        -----------------------------------
+        $14.39 (Gross profit per water bottle)
+*/

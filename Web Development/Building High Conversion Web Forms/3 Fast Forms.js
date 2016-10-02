@@ -63,5 +63,4 @@
         - Cut
             - We actually don't need it.
         - Postpone
-        - Kill
 */
