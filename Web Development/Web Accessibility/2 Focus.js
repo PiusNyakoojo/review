@@ -72,3 +72,68 @@
     page. This process is known as: Managing Focus. 
 
 */
+/*
+    Skipping Links (e.g. useful to prevent keyboard users from tabbing through all the menu links)
+
+        - Provide a hidden link (Aka skip links). 
+            - Skip links provide a menu to keyboard users to bypass the navigation links
+
+            <a href="#maincontent" class="skip-link">Skip to main content</a>
+
+            .skip-link {
+                position: absolute;
+                top: -40px; // off screen
+                left: 0px;
+                background: #BF1722;
+                color: white;
+                padding: 8px;
+                z-index: 100;
+            }
+
+            .skip-link:focus {
+                top: 0px;
+            }
+
+            The href refers to another element on the page. In this case the element with id of maincontent.
+
+        We want the skip-link to be displayed before the rest of the DOM so we place it before the nav menu 
+
+        <a href="#maincontent" class="skip-link">Skip to main content</a>
+        <nav>
+            //...
+        </nav>
+        <main id="maincontent" tabindex="-1">
+            //...
+        </main>
+
+        Adding a tabindex="-1" to the maincontent allows this to work for older browsers. 
+*/
+/*
+    The ARIA Authoring Practices doc (or "ARIA Design Patterns doc") is a great resource for figuring out what 
+    kind of keyboard support your complex components should implement. 
+
+    There are currently two versions:
+        - WAI-ARIA Authoring Practices 1.0
+        - WAI-ARIA Authoring Practices 1.1 (Newer working draft)
+
+*/
+/*
+    Roving Focus: 
+
+    <li tabindex="0" checked>
+    <li tabindex="-1">
+    <li tabindex="-1">
+    <li tabindex="-1">
+    
+    On TAB set the next item's tabindex to 0.
+
+    <li tabindex="-1">
+    <li tabindex="0" checked>       // <-- Call .focus() on this item, setAttribute("checked", true)
+    <li tabindex="-1">
+    <li tabindex="-1">
+
+    When we reach the bottom, we need to wrap back up to the first item. 
+*/
+/*
+    For building complex components, Roving Focus is a really invaluble technique.
+*/
