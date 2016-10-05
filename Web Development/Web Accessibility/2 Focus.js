@@ -137,3 +137,65 @@
 /*
     For building complex components, Roving Focus is a really invaluble technique.
 */
+/*
+    A responsive drawer panel. This provides an interesting challenge for accessibility especially since it's
+    a common design pattern. 
+*/
+/*
+    If we see that the focus has disappeared from the screen while tabbing through, we can open the console as 
+    log the activeElement with: 
+
+        document.activeElement
+*/
+/*
+    We can also use the Chrome's Accessibility (a11y) Developer Tools extension. 
+*/
+/*
+    Accessibility (a11y) requires a single, and present <h1> to assist in landmark navigation of content.
+*/
+/*
+    <script src="https://example.com/example-framework.js" crossorigin="anonymous"></script>
+*/
+/*
+    To fix the problem with our responsive drawer panel, we can use 
+
+        display: none;
+
+        OR 
+
+        visibility: hidden;
+
+    In the css of the element. whenever the item is offscreen. This will prevent focus from being able to move 
+    to that element. Just before the element becomes assessible on screen, we can use: 
+
+        display: block;
+
+        OR 
+
+        visibility: visible;
+*/
+/*
+    Make sure your charset is defined at the top of your head or in HTTP headers, otherwise IE may have
+    to restart page parsing (resulting in canceled requests).
+*/
+/*
+    2.1.2 No Keyboard Trap
+    Keyboard focus is never locked or trapped at one particular page element. The user can navigate to and 
+    from all navigable page elements using only a keyboard.
+
+    However, there are instances in which the keyboard trap is a desirable effect. For example, a modal window. 
+    A modal window is a window that pops up to emphasize some information. Often times, developers will add a 
+    dimly lit panel behind it to cover the page.
+*/
+/*
+    There are techniques to allow this modality to provide temporary keyboard traps but it doesn't have wide
+    spread browser support yet.
+
+        <dialog open>
+            <p>Hello World!</p>
+        </dialog>
+*/
+/*
+    View the modal-keycontrols.js for how to add temporary keyboard trapping to a modal view. The accessible modal 
+    window is like the BOSS battle of accessibility :D. Let's get to the next level!!
+*/
