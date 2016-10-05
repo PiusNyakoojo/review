@@ -86,3 +86,93 @@
 
         e.g. Don't make divs that act as buttons.. just make a button!!
 */
+/*
+    By using the right element for the interaction:
+
+        <input type="radio" checked name="tType" value="0">
+
+    We get ROLE, STATE and VALUE automatically.
+*/
+/*
+    Also make sure to make the name disoverable:
+
+    Guideline 1.1
+    Text Alternatives: Provide text alternatives for non-text content
+*/
+/*
+    name, label, title, text alternative? For the purposes of this course we'll use Label and Name interchangeably.
+
+    There are 2 types of labels:
+        - visible
+            - used by all users to assist with association with an element
+        - text-alternatives 
+            - used when there is no need for a visual label.
+            - for example with an image
+            - by default, not visible
+*/
+/*
+    1.1.1 Non-text content
+
+        - All images, form image buttons, and image map hot spots have appropriate, equivalent alternative 
+        text. 
+        - Images that do not convey content, are decorative, or contain content that is already conveyed in 
+        text are given null alt text (alt="") or implemented as CSS backgrounds. All linked images have 
+        descriptive alternative text. 
+        - Form buttons have a descriptive value. 
+        - Form inputs have associated text labels.
+
+*/
+/*
+    <button>Search</button> // Search is the value. 
+*/
+/*
+    <label for="letter">
+        <span>Receive promotional offers?</span>
+        <input type="checkbox" checked name="jLetter" id="letter">
+    </label>
+*/
+/*
+    Using proper labeling not only helps accessibility but makes the element easier to target for all users!
+*/
+/*
+    Text alternatives for images: 
+
+    <img src="bees.jpg"
+        alt="Bees swarming">
+
+    alt also allows you to specify a string to display when an image is not available.
+        - Whether the image fails to load 
+        - You're a web crawler
+        - Or you're a screen reader
+
+    alt differs from something like 
+
+        <figure>
+            <img alt="Waterbaloons"
+                src="waterbaloon.jpg"
+                title="Not alt text either">
+            <figcaption>
+                Not alt text 
+            </figcaption>
+        </figure>
+
+    And 
+
+        <img src="wallabies.jpg"
+            alt="Wallaby and joey"
+            title="Not alt text either">
+
+    Caption or title provides additional content for the image rather than an alternative to an image. 
+*/
+/*
+    Writing useful alt text is a bit of an art. :) In order for it to be useful text, it should convey the same 
+    message as the image in the given context. 
+
+*/
+/*
+    For a magnifying glass in a search bar, it's probably better to set the alt text to an empty string to avoid 
+    confusion and redundancy. In this case the image is completely skipped by the screen reader. 
+*/
+/*
+    Thumbnail images should not have alt text!!! It is redundant information!!!!
+*/
