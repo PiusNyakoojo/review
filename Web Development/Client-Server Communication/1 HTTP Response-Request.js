@@ -39,4 +39,18 @@
 /*
     HTTP Methods: GET, POST, DELETE, PUT
 
+    After the 1st line containing the method, resource name and HTTP version, we have the HTTP headers.
+    All of the headers are optional except for the Host header.
+*/
+/*
+    HTTP RESPONSE
+
+    HTTP/1.1 200 OK
+    Content-Length: 16824          // not optional
+    Server: Apache
+    Content-Type: text/html 
+    Date: Wed, 06 Apr 2016 
+    Etag: fd87e6789
+
+    <binary date> // The actual data e.g. image, json etc..
 */
