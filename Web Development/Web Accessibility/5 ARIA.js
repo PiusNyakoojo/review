@@ -52,3 +52,14 @@
         - add focusability
         - add keyboard event handling
 */
+/*
+    So far we've supported using native HTML5 elements because they give us built in semantics, keyboard support and 
+    focus. 
+
+        <label>
+            <input type="radio" checked name="tType" value="0">
+            Round Trip
+        </label>
+    
+    However, there are instances when native HTML5 elements won't cut it.
+*/
