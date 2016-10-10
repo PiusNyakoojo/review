@@ -144,3 +144,6 @@
         - 48dp minimum touch target size 
         - 32dp margin around touch target 
 */
+/*
+    Use color and contrast in such a way that is accessible to use by anyone and everyone!
+*/
