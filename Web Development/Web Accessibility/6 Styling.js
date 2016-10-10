@@ -127,5 +127,20 @@
     correctly, which can act as a safeguard when you're testing and debugging your code.
 */
 /*
-    
+    1.4.4 Resize text - WebAIM checklist
+        - The page is readable and functional when the text size is doubled.
+
+    Practice responsive web design with: 
+
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    Use relative sizing when working with font sizes and widths of elements.
+
+        width: 50%; // relative to the containing block
+        font-size: 1.2em; // relative to the font-size of the parent
+        font-size: 2rem; // relative to the font-size of the root
+
+    Use appropriate touch targets to make input elements easier to press without touching other elements. 
+        - 48dp minimum touch target size 
+        - 32dp margin around touch target 
 */
