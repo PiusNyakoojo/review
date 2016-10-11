@@ -147,3 +147,35 @@
 /*
     Use color and contrast in such a way that is accessible to use by anyone and everyone!
 */
+/*
+    WebAIM Checklist: 
+
+    1.4.3 Contrast (Minimum)
+        - Text and images of text have a contrast ratio of at least 4.5:1
+        - Large text (over 18 point or 14 point bold) has a contrast ratio of at least 3:1
+
+    1.4.6 Contrast (Enhanced)
+        - Text and images of text have a contrast ratio of at least 7:1.
+        - Large text (over 18 point or 14 point bold) has a contrast ratio of at least 4.5:1
+*/
+/*
+    1.4.1 Use of Color 
+        - Color is not used as the sole method of conveying content or distinguishing visual elements.
+        - Color alone is not used to distinguish links from surrounding text unless the luminance contrast 
+        between the link and the surrounding text is at least 3:1 and an additional differentiation 
+        (e.g. it becomes underlined) is provided when the link is hovered over or receives focus.
+*/
+/*
+    NoCofee is a good chrome extension to use to simulate color-blindness. 
+
+    High Contrast is a good chrome extension to use to determine if your site is great for users who use high 
+    contrast settings. 
+*/
+/*
+    Questions to ask when deciding which piece of your technology needs to be accessible immediately:
+        - How frequently is this piece of UI used? 
+        - How badly does this accessibility issue affect your users?
+        - How expensive is it going to be to fix?
+
+        Good a11y == good UX
+*/
