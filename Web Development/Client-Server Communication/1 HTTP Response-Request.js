@@ -54,3 +54,6 @@
 
     <binary date> // The actual data e.g. image, json etc..
 */
+/*
+    Use Chrome Dev tools to view the number of requests from a page and the amount of data transferred in bytes.
+*/
