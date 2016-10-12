@@ -58,5 +58,7 @@
     Use Chrome Dev tools to view the number of requests from a page and the amount of data transferred in bytes.
 */
 /*
-    POST requests can have information in the body
+    POST requests can have information in the body.
+
+    It's usually recommended to not respond to a POST request with a website but instead with a redirect. 
 */
