@@ -62,3 +62,10 @@
 
     It's usually recommended to not respond to a POST request with a website but instead with a redirect. 
 */
+/*
+    Instead of using XHR we'll use the Fetch API to request information from a server. 
+
+    fetch('/animals/cat.json')
+        .then(response => response.text())
+        .then(body => console.log(body));
+*/
