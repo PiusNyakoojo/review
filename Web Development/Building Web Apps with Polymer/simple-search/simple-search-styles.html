@@ -1,0 +1,25 @@
+<dom-module id="simple-search-styles">
+  <template>
+    <style>
+      .flex-horizontal {
+        @apply(--layout-horizontal);
+      }
+      .flexchild{
+        @apply(--layout-flex);
+      }
+      .trigger-close,
+      .trigger-search,
+      .input-area {
+        display: none;
+      }
+      .opened .trigger-search,
+      .opened .input-area,
+      .opened .trigger-close {
+        display: block;
+      }
+      .opened .trigger-open {
+        display: none;
+      }
+    </style>
+  </template>
+</dom-module>
