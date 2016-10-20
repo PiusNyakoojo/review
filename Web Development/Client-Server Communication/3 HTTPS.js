@@ -48,7 +48,7 @@
     Let's encrypt comes to the market and offers certificates for free!
 */
 /*
-    TLS has 2 important cryptographic building blocks:
+    TLS (Transport Layer Security) has 2 important cryptographic building blocks:
         - Encryption 
         - Hashing 
 
@@ -92,4 +92,28 @@
     We have 
 
         (Raw -> Hashed data) + Signature -> signed document 
+
+    On the client side: 
+
+        Decrypt the signature 
+*/
+/*
+    Symmetric Encryption
+        - The browser generates a key and sends it over to the server to use as well.
+        - Faster, more efficient and scales better to big data. 
+*/
+/*
+    There are 2 main things that could go wrong when attempting to communicate using 
+    TLS: 
+        - Certificate signature of an authority is invalid
+        - Server was unable to communicate after switching to symmetric encryption 
+
+    In reality a lot more things could go wrong: 
+        - The certificate expires 
+        - The hash function is weak and can be easily overcome
+        - The encryption function is weak and can be easily overcome
+        - Sometimes the certificate is valid but the rest of the server setup isn't
+
+    A great site to see how the browser behaves with a TLS connection has some issues 
+    is: https://badssl.com 
 */
