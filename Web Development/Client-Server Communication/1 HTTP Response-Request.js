@@ -69,3 +69,22 @@
         .then(response => response.text())
         .then(body => console.log(body));
 */
+/*
+    Head of line blocking is when the 1st request has to be processed before all other 
+    requests can be processed. To solve this problem some browsers open up 6 parallel 
+    connections. This can help but is only a patch to the solution. It doesn't really
+    solve it. 
+
+    Let's look at how HTTP/2 fixes the issue of Head-of-line blocking.
+
+    Every time a browser connects to a server make a request it has to go through a 
+    TCP handshake process. This 3-way handshake is very time consuming. To counteract 
+    the cost of these handshakes, HTTP/1.1 introduced the concept of 
+
+        Connection: keep-alive 
+
+    If the client sets the "Connection":"keep-alive" header the server will not close 
+    the connection after successfully delivering the response. Instead, the server 
+    will allow the client to reuse the already established connection for additional 
+    requests. 
+*/
