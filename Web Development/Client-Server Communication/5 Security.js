@@ -63,3 +63,52 @@
 
     However, not all requests will have preflights: e.g. images and form requests. 
 */
+/*
+    PUT preflights a request. 
+
+    Cross-site request forgery (CSRF)
+        - An addtional token that is appended to a form by a server
+        - If someone submits a request, the server checks if the tokens match. If so 
+            then the request goes through. Otherwise, the request is rejected.
+*/
+/*
+    Lesson 5 - CSRF Solution:
+
+    var body = 'request=Umbrella+Corp&amount=666';
+    fetch('http://bank.127.0.0.1.xip.io:8080/transfer', {
+        method: 'POST',
+        mode: 'cors',
+        headers: {
+            "Content-Length": body.length,
+            "Content-Type": "application/x-www-form-urlencoded"
+        },
+        credentials: 'include',
+        body: body
+    }).then(function(res) {
+        // ...
+    }).catch(function(err) {
+        // ...
+    })
+*/
+/*
+    The PUT method also sends a preflight request. 
+
+    fetch('some_url', {
+        method: 'POST',
+        mode: 'cors',
+        headers: {
+            "X-Forwarded-For": "www.google.com"
+        }
+    }).then(function(res) {
+        // do something
+    }).catch(function(err) {
+        // handle error
+    })
+*/
+/*
+    XSS - Cross-site scripting occurs because javascript can be injected to any 
+    site and get access to all of that site's data. 
+
+    This easily happens when user input isn't validated. Always validate your user's 
+    input 
+*/
