@@ -33,5 +33,9 @@
         - What UI components are key to our application?
         - What supporting resources are needed for the app shell?
              -javascript, styles, etc..
-
+*/
+/*
+    With HTTP/2 we should link to an external stylesheet so it can be cached for fast retrievals 
+    in the future. We should defer the loading of HTML, Javascript and images as well until after the 1st 
+    load experience. 
 */
