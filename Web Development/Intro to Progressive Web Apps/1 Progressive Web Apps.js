@@ -27,3 +27,11 @@
     Finally, we'll learn how to make our web app installable via the web app manifest.
 
 */
+/*
+    When designing the application shell, ask yourself:
+        - What needs to be on the screen immediately?
+        - What UI components are key to our application?
+        - What supporting resources are needed for the app shell?
+             -javascript, styles, etc..
+
+*/
