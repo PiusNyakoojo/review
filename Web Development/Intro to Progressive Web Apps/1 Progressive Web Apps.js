@@ -80,7 +80,7 @@
         - Fast!!
     
     Caches Object - Disadvantages
-        - Transactional: when writing to the same data point, the data may ber overriden. 
+        - Not transactional: when writing to the same data point, the data may be overriden. 
         - Not available on all browsers yet. In fact, not a lot of browser support at all. 
 */
 /*
@@ -103,4 +103,8 @@
     Browsers make no promises that they'll keep data around forever. This locally stored data can 
     be removed anytime without warning. For that reason, it's important to sync critical data to the 
     cloud as soon as possible. 
+*/
+/*
+    In the next session we'll use the Service worker to cache the app shell and the data to ensure that 
+    our app is blazing fast and works offline.
 */
