@@ -89,7 +89,7 @@ if ('serviceWorker' in navigator) {
 if ('serviceWorker' in navigator) {
     navigator.serviceWorker
         .register('/sw.js') // registered at the root of the domain. 
-        .then(...);
+        .then(/* ... */);
 }
 /*
     If the service worker is registered at the root of the domain, then its scope will be the entire origin. 
@@ -128,7 +128,7 @@ if ('serviceWorker' in navigator) {
 // service-worker.js
 
 var cacheName = 'weatherPWA';
-var filesToCache = [...];
+var filesToCache = [/* ... */];
 
 self.addEventListener('install', function(e) {
     e.waitUntil(
