@@ -54,7 +54,7 @@
     Step 5: 
         - Push/message
         - receives data from Fetch
-        - receives data from Terminated
+        - can be Terminated
 */
 /*
     Service workers require HTTPS. If your site isn't loaded over a secure connection, the browser simply 
@@ -196,4 +196,20 @@ self.addEventListener('fetch', function(e) {
 
     It's crucial that the HTTP request made during the install event goes directly to the network and doesn't return a response from the browser's cache. 
     Otherwise, the browser may install an old cached version which results in a service worker cache that never actually updates. 
+*/
+/*
+    Fallback URL 
+        - A common pattern when developing single page applications is to bootstrap initial 
+        navigations with an App Shell, and then load dynamic content based on URL routing rules. 
+        sw-precache supports this with the concept of a "fallback URL": 
+
+        {
+            navigateFallback: '/app-shell',
+            // ... other options as needed...
+        }
+
+        In this configuration, whenever the service worker intercepts a navigate request for a 
+        URL that doesn't exist in the cache, it will respond with the cached contents of 
+        /app-shell. It's up to you to ensure that /app-shell contains all of the resources 
+        needed to bootstrap your SPA. 
 */
