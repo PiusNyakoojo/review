@@ -27,6 +27,21 @@
         - and more..
 */
 /*
+    Shared Worker 
+        - The SharedWorker interface represents a specific kind of worker that can be accessed from several 
+        browsing contexts, such as several windows, iframes or even workers. They implement an interface 
+        different than dedicated workers and have a different global scope, SharedWorkerGlobalScope.
+
+    var myWorker = new SharedWorker("worker.js");
+
+    Web Workers API 
+        - A worker is an object created using a constructor (e.g. Worker()) that runs a named JavaScript file. 
+        This file contains the code that will run in the worker thread; workers run in another global context 
+        that is different from the current window. Thus, using the window shortcut to get the current global 
+        scope (instead of self) within a Worker will return an error.
+
+*/
+/*
     Because a service worker runs in the background, they have a different 
     lifecycle which is completely separate from the webpage. 
 
