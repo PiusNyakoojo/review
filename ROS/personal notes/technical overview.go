@@ -36,3 +36,13 @@
     corresponds to the host:port of the XML-RPC server it is running. By default, the Master will bind to 
     port 11311.
 */
+/*
+    7. Establishing a service connection
+
+        1. Service registers with Master
+        2. Service client looks up service on the Master
+        3. Service client creates TCP/IP to the service
+        4. Service client and service exchange a Connection Header
+        5. Service client sends serialized request message
+        6. Service replies with serialized response message
+*/
