@@ -228,3 +228,191 @@ self.addEventListener('fetch', function(e) {
         /app-shell. It's up to you to ensure that /app-shell contains all of the resources 
         needed to bootstrap your SPA. 
 */
+/*
+    Be careful when storing data in the cache and retrieving it rather than from the network. This 
+    may result in stale data. 
+*/
+/*
+    Cache First, then Network 
+        - Best to use for things that don't change often like your app shell. 
+    Network First, then Cache
+        - Use for basic read-through caching
+        - Best to use for API requests for some JSON for instance. 
+        - Would rather have stale data than no data at all. 
+        - The disadvantage is that the user has to wait for the network to 
+        fail before getting any data (if the network is poor that is)
+    Cache Only 
+        - Tries to resolve resources from the Cache. If the resource isn't there, the request fails 
+        - This is a good option when you need to guarantee that no network request will be made. For instance, 
+        to save battery life on mobile devices
+    Network Only 
+        - Network tries to fetch the request from the network. If the fetch fails then we won't attempt to 
+        retrieve it from the cache. 
+        - This is useful for things that aren't cached. For example, analytics data requests, things that 
+        aren't GET requests, etc. 
+    Cache and Network Race
+        - A strategy to request the resource from both the cache and the network in parallel and responds with 
+        whichever responds with a successful result first.
+        - In most cases, if the data is cached, the cached resource will return first. However, if the data is not 
+        cached, then the network will either return something or will fail and won't avoid ask if the cache contains 
+        anything. 
+        - If the network responds successfully then the request will be cached so that the cache is always up to date.
+    Cache Then Network 
+        - Ideal for data that is updated frequently or when it's important to get data on screen as quickly as possible. 
+        - Like the fastest strategy, two parallel requests are made:
+            - 1 onto the cache and 1 onto the network. 
+            - Show the cached data first then update the cache and the page when the network data arrives. 
+        - Take care not to squash the latest data if the network returns before the cache. 
+*/
+/*
+    Give the user something useful to do if they are offline. For example, the guardian newspaper site gives the user a 
+    crossword puzzle if they are offline. 
+*/
+/*
+    Choosing the best caching strategy:
+
+        Inventory and prices for an ecommerce site 
+            - Network only 
+        Images required by the app needed for first render 
+            - Cache only 
+        Social media timeline data 
+            - Cache, then network 
+        Game leaderboard data 
+            - Network, then cache 
+*/
+/*
+    Cache first, then network is ideal for our weather application. It gets the weather forecast on screen as quickly as 
+    possible then it displays the latest results once the network has returned with the data. We expect the network response 
+    to be the source of truth. Always providing us with the most up to date data. 
+
+    To use this strategy, we need to kick off 2 parallel asynchronous requests. 
+        - 1 to get the cached data to get something on the screen as quickly as possible (even if it may be stale).
+        - 1 to get the true state of the data from the network. When the network request responds, we store the 
+        response in the cache for future retrievals. 
+*/
+// sw.js
+onfetch = function(e) {
+    var url = e.request.url;
+    if (url == "app.html") {
+        e.respondWith(
+            caches.match(e.request)
+        );
+    }
+
+    if (url == "content.json") {
+        // go to the network for updates
+        // then cache response and return 
+        e.respondWith(
+            fetch(/* ... */).then(function(r) {
+                cache.put(url, r.clone());
+                return r;
+            })
+        );
+    }
+};
+/*
+    In app.js of our weather app 
+*/
+app.getForecast = function(key, label) {
+    var url = baseURL + key + '.json';
+    if ('caches' in window) {
+        caches.match(url).then(function(response) {
+            if (response) {
+                response.json().then(function(json) {
+                    // Only update if the XHR is still pending, otherwise the XHR has already 
+                    // returned and provided the latest data. 
+                    if (app.hasRequestPending) {
+                        console.log('Updated from cache');
+                        json.key = key;
+                        json.label = label;
+                        app.updateForecastCard(json);
+                    }
+                });
+            }
+        });
+    }
+
+    // Make the XHR to get the data, then update the card 
+    app.hasRequestPending = true;
+    var request = new XMLHttpRequest();
+    request.onreadystatechange = function() {
+        if (request.readyState === XMLHttpRequest.DONE) {
+            if (request.status === 200) {
+                var response = JSON.parse(request.response);
+                response.key = key;
+                response.label = label;
+                app.hasRequestPending = false;
+                app.updateForecastCard(response);
+            }
+        }
+    };
+    request.open('GET', url);
+    request.send();
+};
+/*
+    The resources for the app shell (e.g. app_shell.html) should be separate from the application's 
+    data. That way, you can update one without disturbing the other.
+
+    If it's data. We should fetch that from the network. If it's app content, we should see if 
+    it's in the network and fetch if it's not.
+
+*/
+
+var dataCacheName = 'weatherData-final';
+var cacheName = 'weatherPM-step-final-1';
+
+// ...
+
+self.addEventListener('fetch', function(e) {
+    console.log('[ServiceWorker] Fetch', e.request.url);
+    if (e.request.url.startsWith(dataUrl)) {
+        e.respondWith(
+            fetch(e.request)
+            .then(function(response) {
+                return caches.open(dataCacheName).then(function(cache) {
+                    cache.put(e.request.url, response.clone());
+                    console.log('[ServiceWorker] Fetched&Cached Data');
+                    return response;
+                });
+            })
+        );
+    } else {
+        e.respondWith(
+            caches.match(e.request).then(function(response) {
+                return response || fetch(e.request);
+            })
+        );
+    }
+});
+/*
+    sw-precache is a node module that will automagically generate a service worker for your 
+    application. It will cache your app shell's resources as desired. By changing some configuration 
+    options, we can set some run-time caching options. 
+
+    The module is meant to be used with a gulp or grunt build tool. However, it can also be used with 
+    a command line interface. 
+
+    The module's API provides a method for creating a service worker and saving the resulting code 
+    to a file. The advantage of including it to your build script is that it can automatically run 
+    when your files change. You don't need to manually update it every time.
+*/
+/*
+    npm install sw-precache --save-dev 
+
+    {
+        "devDependencies": {
+            "browser-sync": "",
+            "del": "",
+            "gulp": "",
+            "gulp-autoprefixer": "",
+            "gulp-minify-css": "",
+            "gulp-rename": "",
+            "gulp-sass": "",
+            "sw-precache": ""
+        }
+    }
+*/
+/*
+    
+
+*/
