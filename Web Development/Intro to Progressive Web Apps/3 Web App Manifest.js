@@ -126,3 +126,70 @@
 
     <script src="/path/to/sw-toolbox/companion.js" data-service-worker="my-service-worker.js"></script>
 */
+/*
+    For Chrome to prompt a user to add a web application to their homescreen 3 things need to be satisfied:
+        - Service Worker 
+            - Requires HTTPS :)
+        - Web App Manifest
+        - The user must be engaged
+            - Currently this means at least 2 navigations within 5 minutes. 
+            - This criteria will change in the future. 
+
+    Why is the bar set so high? Well because it is important that when the user sees the application on the 
+    home screen, it must be: 
+        - Reliable
+            - Fast loading, offline and on flaky networks
+        - Fask
+            - Smooth animation, scrolling and nav 
+        - Engaging and integrated
+            - On the home screen, no URL bar, icons, splash 
+            - Re-engaging with push notifications 
+
+    In some cases, you may want to cancel or defer the banner so we don't interrupt the user's flow. 
+    For instance, when the user is filling out a form for purchasing/ordering something :)
+
+    Checkout "onbeforeinstallprompt" 
+        - Using this will allow you to determine how users are interacting with the banner. 
+*/
+/*
+    The "Add to Home Screen" on mobile safari is a bit different but allows you to do many of the same things 
+    that are available on android. 
+
+    Instead of looking for the Web App Manifest, safari looks for some meta tags: 
+
+    The apple touch icons were given a white background. 
+    
+        <meta name="apple-mobile-web-app-capable">
+        <meta name="apple-mobile-web-app-status-bar-">
+        <meta name="apple-mobile-web-app-title">
+        <link rel="apple-touch-icon" sizes="60x60" href="images/icons/apple-touch-icon-60.png">
+        <link rel="apple-touch-icon" sizes="76x76" href="images/icons/apple-touch-icon-76.png">
+        <link rel="apple-touch-icon" sizes="120x120" href="images/icons/apple-touch-icon-120.png">
+
+        For the apple touch icon sizes we should specify 6 sizes:
+            - 60, 76, 120, 152, 167, 180
+
+        To hide the browser UI components:
+
+            <meta name="apple-mobile-web-app-capable" content="yes">
+        
+        To minimize the status bar: 
+
+            <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+            <meta name="apple-mobile-web-app-status-bar-style" content="default">
+            
+
+        If we do this, we should add some padding to the header because the status text will still 
+        show up. 
+
+        Configuring web applications for safari can be found here: 
+
+            https://developer.apple.com/library/content/documentation/AppleApplications/Reference/SafariWebContent/ConfiguringWebApplications/ConfiguringWebApplications.html
+        
+*/
+/*
+    Deploy to An HTTPS Host (Firebase :D)
+        - firebase login to authenticate with Firebase 
+        - firebase init to initialize our Firebase project
+        - firebase deploy to upload our application to Firebase
+*/
