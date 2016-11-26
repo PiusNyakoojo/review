@@ -1,4 +1,11 @@
 /*
+    Gomega: 
+    https://onsi.github.io/gomega/#ghttp-testing-http-clients
+
+    Ginkgo: 
+    http://onsi.github.io/ginkgo/#ginkgo-and-continuous-integration
+*/
+/*
     How to Do TDD (Test-driven development)
     - In order to effectively follow the TDD pattern, you must first understand your 
     design. 
