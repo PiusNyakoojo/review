@@ -50,7 +50,7 @@
 	generation or creating UUID based on a clock, etc..
 
 	this.cacheable() allows webpack to be more performant because it won't have to run the loader twice if we ever have the
-	same 2 inputs through the loader.
+	same 2 inputs through the loader. And ultimately, this results in faster builds.
 
 */
 
