@@ -173,3 +173,12 @@
         and thus harder to comprehend as a spec. 
     - Good enough to get the job of high quality code ensurance done.
 */
+/*
+    Listing active servers: 
+
+        lsof -i :8080
+
+    Killing a server 
+
+        kill -9 <PID>
+*/
