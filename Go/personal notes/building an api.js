@@ -159,3 +159,101 @@ func decode(r *http.Request, v interface{}) error {
         - Allow URL parameters to influence how the decoder works 
         - Go a little further and validate the input too...
 */
+
+// OK pattern example 
+
+type Gopher struct {
+    Name string 
+    Country string
+}
+
+func (g *Gopher) OK() error {
+    if len(g.Name) == 0 {
+        return ErrRequired("name")
+    }
+    if len(g.Country) == 0 {
+        return ErrRequired("country")
+    }
+    return nil
+}
+
+func handleCreateGopher(w http.ResponseWriter, r *http.Request) {
+    var g Gopher 
+    if err := decode(r, &g); err != nil {
+        respond.With(w, r, http.StatusBadRequest, err)
+        return
+    }
+    respond.With(w, r, http.StatusOK, &g)
+}
+
+/*
+    Different type of new things 
+        - New things are different to existing things 
+*/
+
+type NewGopher struct {
+    Name string 
+    Email string 
+    Password string 
+    PasswordConfirm string 
+}
+
+type Gopher struct {
+    ID string `json:"id"`
+    Name string `json:"name"`
+    Email string `json:"email"`
+    PasswordHash string `json:"-"`
+}
+
+// Save saves a NewGopher and returns the Gopher. 
+func (g *NewGopher) Save(db *mgo.Database) (*Gopher, error) {
+    // ...
+}
+
+// Writing middleware
+// Run code before and after handler code 
+
+func Wrap(h http.Handler) http.Handler {
+    return &wrapper{handler: h}
+}
+
+type wrapper struct {
+    handler http.Handler
+}
+
+func (h *wrapper) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+    // TODO: do something before each request 
+    h.handler.ServeHTTP(w, r)
+    // TODO: do something after each request 
+}
+
+func main() {
+    handler := NewMyHandler()
+    http.Handle("/", Wrap(handler))
+}
+
+/*
+    Don't break the interface:
+
+    Some people do this:
+*/
+
+func(w http.ResponseWriter, r *http.Request, db *mgo.Session, logger *log.Logger) // bad
+
+/*
+    But this is prefered::::
+*/
+
+func(w http.ResponseWriter, r *http.Request)
+
+// And this is okay..
+
+type Server struct {
+    logger *log.Logger 
+    mailer MailSender
+    slack Notifier
+}
+
+func (s *Server) handleSomething(w http.ResponseWriter, r *http.Request) { /* ... */ }
+
+func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) { /* ... */ }
