@@ -49,3 +49,24 @@ type TypeOptions struct {
 
 file, err := os.File("whatever.html")
 defer file.Close() // defer is called anytime the function exits. The end of a function isn't necessarily when it exits (e.g. in a panic)
+
+
+/*
+    Write comments for special cases above the function 
+*/
+
+// Trunc returns the integer value of x. 
+//
+// Special cases are:
+//      Trunc(+-0) = +-0
+//      Trunc(+-Inf) = +-Inf 
+//      Trunc(NaN) = NaN
+func Trunc(x float64) float64 
+
+func trunc(x float64) float64 {
+    if x == 0 || IsNaN(x) || IsInf(x, 0) {
+        return x
+    }
+    d, _ := Modf(x)
+    return d
+}
