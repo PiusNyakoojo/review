@@ -27,7 +27,7 @@
     If I'd followed all the rules, I'd never have gotten anywhere.
     - Marilyn Monroe
 
-    Action Expresses Priotiries
+    Action Expresses Priorities
     - Gandhi
 */
 /*
