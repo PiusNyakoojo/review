@@ -114,3 +114,14 @@ type Reader interface {
 
 // Save writes the contents of doc to the file f.
 func Save(f *os.File, doc *Document) error
+
+// Instead:::
+
+// Save writes the contents of doc to the supplied
+// ReadWriteCloser
+func Save(rwc io.ReadWriteCloser, doc *Document) error
+
+// No need to read: To -->
+func Save(wc io.WriteCloser, doc *Document) error 
+
+type No
