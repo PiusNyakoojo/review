@@ -5,7 +5,7 @@
 
 	A microprocessor is a tiny machine that work in tandem with electrical inputs and ultimately do some job. We give the microprocessor
 	instructions. These instructions are given in a specific language. However, not all microprocessors are the same. In fact, they don't
-	all speak the exact same language. In general a microprocessor will speak one of these languages:
+	all speak the exact same language. In general a microprocessor will "speak" one of these languages:
 		- IA-32
 		- x86-64
 		- ARM
