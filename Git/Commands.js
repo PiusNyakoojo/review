@@ -46,4 +46,8 @@
 
 	// View commit history
 	git log
+	
+	git commit 
+	
+	git add
 */
